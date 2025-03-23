@@ -19,7 +19,7 @@ function init() {
     const loader = new THREE.GLTFLoader();
 
     // **Βάλε σωστό URL για το GLB αρχείο σου**
-const avatarUrl = 'https://models.readyplayer.me/67e0573b55c6887bf46d19a1.glb';
+    const avatarUrl = 'https://models.readyplayer.me/67e0573b55c6887bf46d19a1.glb';
 
     // Φόρτωση avatar
     loader.load(
@@ -38,23 +38,41 @@ const avatarUrl = 'https://models.readyplayer.me/67e0573b55c6887bf46d19a1.glb';
         }
     );
 
+    // Ακρόαση για την κίνηση του ποντικιού
+    document.addEventListener("mousemove", onMouseMove);
+
     animate();
+}
+
+// Παρακολούθηση του ποντικιού
+function onMouseMove(event) {
+    if (!avatar) return;
+
+    // Μετατροπή της θέσης του ποντικιού σε συντεταγμένες Three.js
+    let mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    let mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Υπολογισμός της γωνίας περιστροφής
+    let targetRotationY = mouseX * Math.PI * 0.5; // Περιορίζουμε το εύρος περιστροφής
+    let targetRotationX = mouseY * Math.PI * 0.1; // Μικρή κλίση πάνω-κάτω
+
+    // Ομαλή μετάβαση προς τη νέα γωνία
+    avatar.rotation.y += (targetRotationY - avatar.rotation.y) * 0.1;
+    avatar.rotation.x += (targetRotationX - avatar.rotation.x) * 0.1;
 }
 
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    if (avatar) {
-        avatar.rotation.y += 0.01; // Περιστροφή για φυσικότητα
-    }
     renderer.render(scene, camera);
 }
 
 // Εκκίνηση 3D σκηνής
 init();
+
+// Κουμπί για ομιλία
 document.getElementById('speak-button').addEventListener('click', () => {
     const msg = new SpeechSynthesisUtterance("Γειά σου Αλέξανδρε. Τι κάνεις? Είσαι καλά? Εγώ νιώθω τέλεια. Πες στην μαμά σου πως είναι πολύ όμορφη!!");
     msg.lang = 'el-GR';
     window.speechSynthesis.speak(msg);
 });
-
