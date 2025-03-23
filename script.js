@@ -1,5 +1,3 @@
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/GLTFLoader.js';
-
 let scene, camera, renderer, avatar;
 
 // Αρχικοποίηση 3D σκηνής
@@ -17,8 +15,10 @@ function init() {
     light.position.set(0, 2, 5);
     scene.add(light);
 
-    // Φόρτωση avatar από ReadyPlayerMe
+    // Δημιουργία loader
+    const loader = new THREE.GLTFLoader();
 
+    // Φόρτωση avatar
     loader.load('https://models.readyplayer.me/1234567.glb', function (gltf) {
         avatar = gltf.scene;
         avatar.position.set(0, -1, 0);
@@ -41,4 +41,3 @@ function animate() {
 
 // Εκκίνηση 3D σκηνής
 init();
-
