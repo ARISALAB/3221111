@@ -18,7 +18,7 @@ function init() {
     scene.add(light);
 
     // Φόρτωση avatar από ReadyPlayerMe
-    const loader = new GLTFLoader();
+
     loader.load('https://models.readyplayer.me/1234567.glb', function (gltf) {
         avatar = gltf.scene;
         avatar.position.set(0, -1, 0);
