@@ -1,3 +1,5 @@
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/GLTFLoader.js';
+
 let scene, camera, renderer, avatar;
 
 // Αρχικοποίηση 3D σκηνής
@@ -10,22 +12,33 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Φως
+    // Προσθήκη φωτισμού
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(0, 2, 5);
     scene.add(light);
 
     // Δημιουργία loader
-    const loader = new THREE.GLTFLoader();
+    const loader = new GLTFLoader();
+
+    // **ΔΙΟΡΘΩΣΗ URL** - Βάλε έγκυρο .glb αρχείο από το Ready Player Me
+    const avatarUrl = 'https://models.readyplayer.me/YOUR_VALID_MODEL.glb';
 
     // Φόρτωση avatar
-    loader.load('https://models.readyplayer.me/1234567.glb', function (gltf) {
-        avatar = gltf.scene;
-        avatar.position.set(0, -1, 0);
-        scene.add(avatar);
-    }, undefined, function (error) {
-        console.error('Σφάλμα φόρτωσης GLB:', error);
-    });
+    loader.load(
+        avatarUrl,
+        function (gltf) {
+            avatar = gltf.scene;
+            avatar.position.set(0, -1, 0);
+            scene.add(avatar);
+            console.log("Μοντέλο φορτώθηκε επιτυχώς!");
+        },
+        function (xhr) {
+            console.log(`Φόρτωση: ${(xhr.loaded / xhr.total * 100).toFixed(2)}%`);
+        },
+        function (error) {
+            console.error('Σφάλμα φόρτωσης GLB:', error);
+        }
+    );
 
     animate();
 }
