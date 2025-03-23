@@ -21,9 +21,13 @@
             height: 100vh;
             background-color: #121212;
         }
-        canvas {
-            position: absolute;
-        }
+     canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Κάνει το canvas να μην καλύπτει το κουμπί */
+}
+
   #speak-button {
     position: absolute;
     bottom: 20px;
