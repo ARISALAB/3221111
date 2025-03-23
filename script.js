@@ -1,3 +1,5 @@
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/GLTFLoader.js';
+
 let scene, camera, renderer, avatar;
 
 // Αρχικοποίηση 3D σκηνής
@@ -16,11 +18,13 @@ function init() {
     scene.add(light);
 
     // Φόρτωση avatar από ReadyPlayerMe
-    const loader = new THREE.GLTFLoader();
+    const loader = new GLTFLoader();
     loader.load('https://models.readyplayer.me/1234567.glb', function (gltf) {
         avatar = gltf.scene;
         avatar.position.set(0, -1, 0);
         scene.add(avatar);
+    }, undefined, function (error) {
+        console.error('Σφάλμα φόρτωσης GLB:', error);
     });
 
     animate();
@@ -35,27 +39,6 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// Μιλάει το avatar με animation στο στόμα
-function speak(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
-
-    // Προσθέτουμε animation στο στόμα
-    if (avatar) {
-        let mouth = new Mouth();
-        avatar.add(mouth);
-        mouth.talk();
-        
-        utterance.onend = () => {
-            mouth.stop();
-        };
-    }
-}
-
 // Εκκίνηση 3D σκηνής
 init();
 
-// Κουμπί για να μιλήσει το avatar
-document.getElementById("speak-button").addEventListener("click", function () {
-    speak("Γεια σας! Είμαι εδώ για να σας βοηθήσω με τον γάμο σας!");
-});
