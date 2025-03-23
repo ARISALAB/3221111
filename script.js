@@ -1,5 +1,3 @@
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128/examples/jsm/loaders/GLTFLoader.js';
-
 let scene, camera, renderer, avatar;
 
 // Αρχικοποίηση 3D σκηνής
@@ -18,9 +16,9 @@ function init() {
     scene.add(light);
 
     // Δημιουργία loader
-    const loader = new GLTFLoader();
+    const loader = new THREE.GLTFLoader();
 
-    // **ΔΙΟΡΘΩΣΗ URL** - Βάλε έγκυρο .glb αρχείο από το Ready Player Me
+    // **Βάλε σωστό URL για το GLB αρχείο σου**
     const avatarUrl = 'https://models.readyplayer.me/YOUR_VALID_MODEL.glb';
 
     // Φόρτωση avatar
