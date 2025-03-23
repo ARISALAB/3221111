@@ -19,7 +19,7 @@ function init() {
     const loader = new THREE.GLTFLoader();
 
     // **Βάλε σωστό URL για το GLB αρχείο σου**
-const avatarUrl = 'https://api.readyplayer.me/v1/portal/snap-station/gallery/67e028fda8401f1d2a0a434d/portrait';
+const avatarUrl = 'https://playerzero.readyplayer.me/profile/aris_alampourinos';
 
     // Φόρτωση avatar
     loader.load(
