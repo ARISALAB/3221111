@@ -19,7 +19,7 @@ function init() {
     const loader = new THREE.GLTFLoader();
 
     // **Βάλε σωστό URL για το GLB αρχείο σου**
-const avatarUrl = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
+const avatarUrl = 'https://sketchfab.com/3d-models/friendly-bird-1b527cf8ad174d7c844db9b1faf45e3d';
 
     // Φόρτωση avatar
     loader.load(
