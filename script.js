@@ -53,7 +53,7 @@ function animate() {
 // Εκκίνηση 3D σκηνής
 init();
 document.getElementById('speak-button').addEventListener('click', () => {
-    const msg = new SpeechSynthesisUtterance("Γειά σου Αλέξανδρε. Τι κάνεις?!!!");
+    const msg = new SpeechSynthesisUtterance("Γειά σου Αλέξανδρε. Τι κάνεις?!!! εισαι καλα?!!! εγω νιωθω τελεια. πεσ στην μαμα σου πωσ ειναι πολυ ομορφη!!");
     msg.lang = 'el-GR';
     window.speechSynthesis.speak(msg);
 });
