@@ -1,4 +1,4 @@
-let scene, camera, renderer, avatar;
+let scene, camera, renderer, avatar, mouth, speakAnimation;
 
 // Αρχικοποίηση 3D σκηνής
 function init() {
@@ -29,6 +29,9 @@ function init() {
             avatar.position.set(0, -0.1, 0);
             scene.add(avatar);
             console.log("Μοντέλο φορτώθηκε επιτυχώς!");
+
+            // Αν το avatar έχει morph targets για το στόμα, το αποθηκεύουμε
+            mouth = avatar.getObjectByName('Mouth');  // Βάλε το όνομα του αντικειμένου στόματος αν είναι διαφορετικό
         },
         function (xhr) {
             console.log(`Φόρτωση: ${(xhr.loaded / xhr.total * 100).toFixed(2)}%`);
@@ -53,8 +56,8 @@ function onMouseMove(event) {
     let mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 
     // Υπολογισμός της γωνίας περιστροφής
-    let targetRotationY = mouseX * Math.PI * 0.5; // Περιορίζουμε το εύρος περιστροφής
-    let targetRotationX = mouseY * Math.PI * 0.1; // Μικρή κλίση πάνω-κάτω
+    let targetRotationY = mouseX * Math.PI * 0.5;
+    let targetRotationX = mouseY * Math.PI * 0.1;
 
     // Ομαλή μετάβαση προς τη νέα γωνία
     avatar.rotation.y += (targetRotationY - avatar.rotation.y) * 0.1;
@@ -67,6 +70,19 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+// Λειτουργία για να κουνηθεί το στόμα
+function animateMouth(isSpeaking) {
+    if (mouth) {
+        if (isSpeaking) {
+            // Ενεργοποιεί την κίνηση του στόματος (π.χ., ανοίγει το στόμα)
+            mouth.morphTargetInfluences[0] = 1; // 1 σημαίνει πλήρης άνοιγμα του στόματος
+        } else {
+            // Κλείνει το στόμα
+            mouth.morphTargetInfluences[0] = 0;
+        }
+    }
+}
+
 // Εκκίνηση 3D σκηνής
 init();
 
@@ -74,5 +90,14 @@ init();
 document.getElementById('speak-button').addEventListener('click', () => {
     const msg = new SpeechSynthesisUtterance("Γειά σου Αλέξανδρε. Τι κάνεις? Είσαι καλά? Εγώ νιώθω τέλεια. Πες στην μαμά σου πως είναι πολύ όμορφη!!");
     msg.lang = 'el-GR';
+
+    // Ξεκινάμε την κίνηση του στόματος πριν την ομιλία
+    animateMouth(true);
+    
     window.speechSynthesis.speak(msg);
+
+    // Όταν ολοκληρωθεί η ομιλία, το στόμα κλείνει
+    msg.onend = function() {
+        animateMouth(false);
+    };
 });
