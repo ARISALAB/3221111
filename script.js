@@ -53,7 +53,7 @@ function animate() {
 // Εκκίνηση 3D σκηνής
 init();
 document.getElementById('speak-button').addEventListener('click', () => {
-    const msg = new SpeechSynthesisUtterance("Άννα, σε αγαπάω!!!");
+    const msg = new SpeechSynthesisUtterance("Γειά σου Αλέξανδρε. Τι κάνεις?!!!");
     msg.lang = 'el-GR';
     window.speechSynthesis.speak(msg);
 });
