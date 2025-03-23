@@ -26,7 +26,7 @@ const avatarUrl = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
         avatarUrl,
         function (gltf) {
             avatar = gltf.scene;
-            avatar.position.set(0, -1, 0);
+            avatar.position.set(0, 1, 0);
             scene.add(avatar);
             console.log("Μοντέλο φορτώθηκε επιτυχώς!");
         },
