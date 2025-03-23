@@ -52,3 +52,9 @@ function animate() {
 
 // Εκκίνηση 3D σκηνής
 init();
+document.getElementById('speak-button').addEventListener('click', () => {
+    const msg = new SpeechSynthesisUtterance("Γεια σου! Είμαι ένας αστροναύτης.");
+    msg.lang = 'el-GR';
+    window.speechSynthesis.speak(msg);
+});
+
